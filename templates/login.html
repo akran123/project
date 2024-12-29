@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block contents %}
+<body>
+    <div id="con">
+        <div id="login">
+            <div id="login_form">
+                <h3 class="login">로그인</h3>
+                <form action="{{url_for('login_done')}}" method="GET">
+                    <p  style="text-align: left; font-size:12px; color:#666">userid:</p>
+                    <input type="text"placeholder="아이디" name="id" id="id" class="size">
+                    <p></p>
+                <br>
+                    <p  style="text-align: left; font-size:12px; color:#666">password:</p>
+                    <input type="password"placeholder="비밀먼호" name="pwd" id="pwd" class="size">
+                    <p></p>
+                <br>
+                    <button type="submit" class="signinbtn">로그인</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock contents %}

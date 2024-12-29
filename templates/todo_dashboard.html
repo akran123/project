@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="profile">
+            <p>{{ user }}</p>
+        </div>
+        <ul class="menu">
+            <li><a href="{{ url_for('dashboard', filter_date='today') }}">Today</a></li>
+            <li><a href="{{ url_for('dashboard', filter_date='tomorrow') }}">Tomorrow</a></li>
+            <li><a href="{{ url_for('dashboard', filter_date='past') }}">Past</a></li>
+            <li><a href="{{ url_for('dashboard') }}">All</a></li>
+            <li><a href="#">My Tasks</a></li>
+        </ul>
+        <button class="create-list-btn">+ Create new list</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header>
+            <h1>TO DO</h1>
+            <form method="post" action="{{ url_for('dashboard') }}">
+                <button type="submit" name="show_details" value="true">Add Task</button>
+            </form>
+        </header>
+        <ul class="task-list">
+            {% for task in tasks %}
+            <li>
+                <input type="checkbox">
+                <span>{{ task.title }}</span> - <small>{{ task.date }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            {% if current_page > 1 %}
+            <a href="{{ url_for('dashboard', page=current_page-1) }}" class="page-btn">Previous</a>
+            {% endif %}
+            {% for i in range(1, total_pages + 1) %}
+            <a href="{{ url_for('dashboard', page=i) }}" class="page-btn {% if i == current_page %}active{% endif %}">
+                {{ i }}
+            </a>
+            {% endfor %}
+            {% if current_page < total_pages %}
+            <a href="{{ url_for('dashboard', page=current_page+1) }}" class="page-btn">Next</a>
+            {% endif %}
+        </div>
+    </main>
+    
+    
+
+    {% if show_details %}
+    <aside class="task-details">
+        <div class="task-header">
+            <h2>세부사항</h2>
+            <form method="post" action="{{ url_for('dashboard') }}">
+                <button type="submit" name="close_details" class="btn btn-close">x</button>
+            </form>
+        </div>
+        <form method="post" action="{{ url_for('dashboard') }}">
+            <label for="task-title">할일:</label>
+            <input type="text" id="task-title" name="task_title" placeholder="Task Title" value="{{ current_task }}" required>
+            
+            <label for="task-date">날짜:</label>
+            <input type="date" id="task-date" name="task_date" required>
+    
+            <label for="subtasks">세부사항:</label>
+            <textarea id="subtasks" name="subtasks"></textarea>
+    
+            <button type="submit" class="btn btn-save">저장</button>
+        </form>
+    </aside>
+    
+    {% endif %}
+</div>
+{% endblock contents %}

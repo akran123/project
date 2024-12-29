@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<body>
+    
+   <div class="wrap">
+        <div class="">
+            <div class="header">
+                <div class="searchArea">
+                    <form>
+                        <input type="search" placeholder="Search">
+                        <span>검색</span>
+                    </form>
+                    
+                </div>
+                <ul class="nav">
+                    <li><a href="home" >HOME</a></li>
+                    <li><a href="dashboard">todo_dashboard</a></li>
+                    <li><a href="#">SERVICE</a></li>
+                    <li><a href="#">CONTACT</a></li>
+
+                    {% if session.uid %}
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+                    {% endif %}
+
+
+                </ul>
+            </div>
+            <div class="intro_text">
+                <h1></h1>
+                <h4 class="contents1"></h4>
+            </div>
+        </div>
+   </div>
+   {% block message %}
+   
+   {% endblock message %}
+   {% block contents %}
+
+   {% endblock contents %}
+
+   
+</body>
+</html>
